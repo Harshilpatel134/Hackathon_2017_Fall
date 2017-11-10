@@ -1,0 +1,13 @@
+html, body {
+    height:100%;
+    margin: 0;
+}
+
+body {
+    background-image: url('../images/wallpaper.png');
+    background-repeat: no-repeat;
+}
+
+.top-buffer {
+    margin-top: 50px;
+}

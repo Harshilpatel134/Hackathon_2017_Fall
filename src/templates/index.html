@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+    <head>
+		<title>Docker Console</title>
+		<link rel="stylesheet" type="text/css"  href="{{ url_for('static',filename='assets/stylesheet.css')}}" >
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <meta http-equiv="refresh" content="5" >
+    </head>
+    <body>
+    <div class="container">
+            <div class="row top-buffer">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <div class="row-fluid">
+                            <img src="{{ url_for('static',filename='images/docker.png')}}" class="home_img center-block" alt="Docker" />
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <form action="/restart" method="post">
+                            <table class="table table-bordered nospace">
+                                <thead>
+                                    <tr class="bg-primary">
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>State</th>
+                                        <th>Status</th>
+                                        <th>Timestamp</th>
+                                        <th>Start</th>
+                                        <th>Stop</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+{% if record %}
+    {% for index in record['result'] %}
+        {% if record['result'][index]['state'] == 'exited' %}
+                                    <tr class="bg-danger">
+        {% else %}
+                                    <tr class="bg-success">
+        {% endif %}
+                                        <td>{{ record['result'][index]['id'] }} </td>
+                                        <td>{{ record['result'][index]['name'] }} </td>
+                                        <td>{{ record['result'][index]['state'] }} </td>
+                                        <td>{{ record['result'][index]['status'] }} </td>
+                                        <td>{{ record['timestamp'] }}</td>
+                                        <td><button class="btn btn-md btn-success btn-block no-under-line" name="start" type="submit" value="{{ record['result'][index]['id'] }}">Start</button></td>
+                                        <td><button class="btn btn-md btn-danger btn-block no-under-line" name="stop" type="submit" value="{{ record['result'][index]['id'] }}">Stop</button></td>
+                                    </tr>
+    {% endfor %}
+                                </tbody>
+{% endif %}
+                            </table>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+</body>
