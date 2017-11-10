@@ -25,17 +25,17 @@ def stop():
         docker_client.containers.get(start_container_id).start()
     if stop_container_id:
         docker_client.containers.get(stop_container_id).stop()
-    # print(start_container_id, stop_container_id)
+    docker_monitor.run()
     return redirect("/")
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     class Config(object):
         JOBS = [
             {
                 'id': 'job1',
                 'func': 'docker_monitor:run',
                 'trigger': 'interval',
-                'seconds': 5
+                'seconds': 300
             }
         ]
         SCHEDULER_API_ENABLED = True
@@ -44,5 +44,7 @@ if __name__ == "__main__":
     scheduler = APScheduler()
     scheduler.init_app(app)
     scheduler.start()
+    # Initial run when app starts
+    docker_monitor.run()
 
     app.run(debug=True)
