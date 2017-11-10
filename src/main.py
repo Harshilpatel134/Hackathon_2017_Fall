@@ -17,7 +17,7 @@ def index():
     return render_template('index.html', record=record)
 
 @app.route("/restart", methods=['POST'])
-def stop():
+def restart():
     docker_client = docker.from_env()
     start_container_id = request.form.get("start")
     stop_container_id = request.form.get("stop")
@@ -25,6 +25,16 @@ def stop():
         docker_client.containers.get(start_container_id).start()
     if stop_container_id:
         docker_client.containers.get(stop_container_id).stop()
+    docker_monitor.run()
+    return redirect("/")
+
+@app.route("/restart_all", methods=['POST'])
+def restart_all():
+    docker_client = docker.from_env()
+    restart_container = request.form.get("restart")
+    if restart_container:
+        for id in docker_client.containers.list(all):
+            docker_client.containers.get(id.short_id).restart()
     docker_monitor.run()
     return redirect("/")
 
