@@ -1,10 +1,11 @@
 #!/bin/python3
 
-from flask import Flask, render_template,request,redirect,url_for
+import json
+import docker
+import docker_monitor
+from flask import Flask, render_template, request, redirect, jsonify, url_for
 from pymongo import MongoClient
 from flask_apscheduler import APScheduler
-import docker_monitor
-import docker
 
 app = Flask(__name__)
 mongo_client = MongoClient('mongodb://mongo_user:mongo_pass@ds257485.mlab.com:57485/hackathon2017')
@@ -15,6 +16,18 @@ collection = db['hackathon']
 def index():
     record = collection.find().sort([('timestamp', -1)]).limit(1)[0]
     return render_template('index.html', record=record)
+
+@app.route("/info/<containder_id>")
+def get_info(containder_id):
+    docker_client = docker.from_env()
+    info = str(docker_client.containers.get(containder_id).attrs)
+    return jsonify(json.loads(info.strip().replace("'", '"').replace('True', '"True"').replace('False', '"False"').replace('None', '"None"')))
+
+
+@app.route("/refresh", methods=['POST'])
+def refresh():
+    docker_monitor.run()
+    return redirect("/")
 
 @app.route("/restart", methods=['POST'])
 def restart():

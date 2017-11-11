@@ -40,22 +40,27 @@
         {% else %}
                                     <tr class="bg-success">
         {% endif %}
-                                        <td>{{ record['result'][index]['id'] }} </td>
+                                        <td><a href="./info/{{ record['result'][index]['id'] }}" target="_blank">{{ record['result'][index]['id'] }} </a></td>
                                         <td>{{ record['result'][index]['name'] }} </td>
                                         <td>{{ record['result'][index]['state'] }} </td>
                                         <td>{{ record['result'][index]['status'] }} </td>
                                         <td>{{ record['timestamp'] }}</td>
-                                        <td><button class="btn btn-md btn-success btn-block no-under-line" name="start" type="submit" value="{{ record['result'][index]['id'] }}">Start</button></td>
-                                        <td><button class="btn btn-md btn-danger btn-block no-under-line" name="stop" type="submit" value="{{ record['result'][index]['id'] }}">Stop</button></td>
+                                        <td><button style="font-weight:bold; font-size:120%" class="btn btn-md btn-success btn-block" name="start" type="submit" value="{{ record['result'][index]['id'] }}">Start</button></td>
+                                        <td><button style="font-weight:bold; font-size:120%" class="btn btn-md btn-danger btn-block" name="stop" type="submit" value="{{ record['result'][index]['id'] }}">Stop</button></td>
                                     </tr>
     {% endfor %}
                                 </tbody>
 {% endif %}
                             </table>
                         </form>
-                        <form action="/restart_all" method="post">
-                            <button class="btn btn-md btn-warning btn-block no-under-line" name="restart" type="submit" value="submit">Restart All</button>
-                        </form>
+                        <div class="row">
+                            <form action="/refresh" method="post" class="col-md-6">
+                                <button style="font-weight:bold; font-size:120%" class="btn btn-md btn-info btn-block" name="refresh" type="submit" value="submit">Refresh</button>
+                            </form>
+                            <form action="/restart_all" method="post" class="col-md-6">
+                                <button style="font-weight:bold; font-size:120%" class="btn btn-md btn-warning btn-block" name="restart" type="submit" value="submit">Restart All</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
