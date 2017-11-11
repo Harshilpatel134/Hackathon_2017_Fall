@@ -4,8 +4,8 @@ html, body {
 }
 
 body {
-    background-image: url('../images/wallpaper.png');
-    background-repeat: no-repeat;
+    background-image: url("../images/background.jpg");
+    background-repeat: repeat;
 }
 
 .top-buffer {

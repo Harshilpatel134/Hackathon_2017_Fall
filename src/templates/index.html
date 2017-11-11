@@ -1,69 +1,71 @@
 <!doctype html>
-<html>
+<html lang="en">
     <head>
 		<title>Docker Console</title>
-		<link rel="stylesheet" type="text/css"  href="{{ url_for('static',filename='assets/stylesheet.css')}}" >
+		<link rel="stylesheet" type="text/css"  href="{{ url_for('static', filename='assets/stylesheet.css')}}" >
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <link rel="icon" type="image/x-icon" href="{{ url_for('static',filename='images/icon.png')}}" />
-        <meta http-equiv="refresh" content="320" >
+        <meta http-equiv="refresh" content="320">
     </head>
     <body>
     <div class="container">
-            <div class="row top-buffer">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <div class="row-fluid">
-                            <img src="{{ url_for('static',filename='images/docker.png')}}" class="home_img center-block" alt="Docker" />
-                        </div>
+        <div class="row top-buffer">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="row-fluid">
+                        <a href="statistics">
+                            <img src="{{ url_for('static', filename='images/docker.png') }}" class="home_img center-block" alt="Docker" />
+                        </a>
                     </div>
-                    <div class="panel-body">
-                        <form action="/restart" method="post">
-                            <table class="table table-bordered nospace">
-                                <thead>
-                                    <tr class="bg-primary">
-                                        <th>ID</th>
-                                        <th>Name</th>
-                                        <th>State</th>
-                                        <th>Status</th>
-                                        <th>Timestamp</th>
-                                        <th>Start</th>
-                                        <th>Stop</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
+                </div>
+                <div class="panel-body">
+                    <form action="/restart" method="post">
+                        <table class="table table-bordered nospace">
+                            <thead>
+                                <tr class="bg-primary">
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>State</th>
+                                    <th>Status</th>
+                                    <th>Timestamp</th>
+                                    <th>Start</th>
+                                    <th>Stop</th>
+                                </tr>
+                            </thead>
+                            <tbody>
 {% if record %}
     {% for index in record['result'] %}
         {% if record['result'][index]['state'] == 'exited' %}
-                                    <tr class="bg-danger">
+                                <tr class="bg-danger">
         {% else %}
-                                    <tr class="bg-success">
+                                <tr class="bg-success">
         {% endif %}
-                                        <td><a href="./info/{{ record['result'][index]['id'] }}" target="_blank">{{ record['result'][index]['id'] }} </a></td>
-                                        <td>{{ record['result'][index]['name'] }} </td>
-                                        <td>{{ record['result'][index]['state'] }} </td>
-                                        <td>{{ record['result'][index]['status'] }} </td>
-                                        <td>{{ record['timestamp'] }}</td>
-                                        <td><button style="font-weight:bold; font-size:120%" class="btn btn-md btn-success btn-block" name="start" type="submit" value="{{ record['result'][index]['id'] }}">Start</button></td>
-                                        <td><button style="font-weight:bold; font-size:120%" class="btn btn-md btn-danger btn-block" name="stop" type="submit" value="{{ record['result'][index]['id'] }}">Stop</button></td>
-                                    </tr>
+                                    <td><a href="./info/{{ record['result'][index]['id'] }}" target="_blank">{{ record['result'][index]['id'] }} </a></td>
+                                    <td>{{ record['result'][index]['name'] }} </td>
+                                    <td>{{ record['result'][index]['state'] }} </td>
+                                    <td>{{ record['result'][index]['status'] }} </td>
+                                    <td>{{ record['timestamp'] }}</td>
+                                    <td><button style="font-weight:bold; font-size:120%" class="btn btn-md btn-success btn-block" name="start" type="submit" value="{{ record['result'][index]['id'] }}">Start</button></td>
+                                    <td><button style="font-weight:bold; font-size:120%" class="btn btn-md btn-danger btn-block" name="stop" type="submit" value="{{ record['result'][index]['id'] }}">Stop</button></td>
+                                </tr>
     {% endfor %}
-                                </tbody>
+                            </tbody>
 {% endif %}
-                            </table>
+                        </table>
+                    </form>
+                    <div class="row">
+                        <form action="/refresh" method="post" class="col-md-6 col-sm-6">
+                            <button style="font-weight:bold; font-size:120%" class="btn btn-md btn-info btn-block" name="refresh" type="submit" value="submit">Refresh</button>
                         </form>
-                        <div class="row">
-                            <form action="/refresh" method="post" class="col-md-6">
-                                <button style="font-weight:bold; font-size:120%" class="btn btn-md btn-info btn-block" name="refresh" type="submit" value="submit">Refresh</button>
-                            </form>
-                            <form action="/restart_all" method="post" class="col-md-6">
-                                <button style="font-weight:bold; font-size:120%" class="btn btn-md btn-warning btn-block" name="restart" type="submit" value="submit">Restart All</button>
-                            </form>
-                        </div>
+                        <form action="/restart_all" method="post" class="col-md-6 col-sm-6">
+                            <button style="font-weight:bold; font-size:120%" class="btn btn-md btn-warning btn-block" name="restart" type="submit" value="submit">Restart All</button>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 </body>
