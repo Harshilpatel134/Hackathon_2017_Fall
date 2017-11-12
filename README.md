@@ -13,7 +13,7 @@ Here is the link for PPT: https://docs.google.com/presentation/d/1nezCN23MTsYmZz
 * MongoDB
 * HTML + Bootstrap + JS
 
-## Archirecture & Technologies
+## Architecture & Technologies
 * MVC
   * Model 
     * MongoDB
