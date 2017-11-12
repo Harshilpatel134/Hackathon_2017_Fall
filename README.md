@@ -18,7 +18,7 @@ Here is the link for documentation: https://github.com/MonkeyCanCode/Hackathon_2
   * Controller
     * Python + Flask framework
 
-## Libraries & frameworks:
+## Libraries & Frameworks:
 * Python (https://github.com/MonkeyCanCode/Hackathon_2017_Fall/blob/master/src/requirements.txt)
   * APScheduler
   * docker
