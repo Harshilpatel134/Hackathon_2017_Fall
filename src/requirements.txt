@@ -19,3 +19,4 @@ tzlocal==1.4
 urllib3==1.22
 websocket-client==0.44.0
 Werkzeug==0.12.2
+plotly==2.0.16
