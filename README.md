@@ -31,6 +31,3 @@ Here is the link for documentation: https://github.com/MonkeyCanCode/Hackathon_2
   * jQuery
   * D3
   * Plotly.js
-
-
- 
